@@ -531,6 +531,10 @@ int main(void) {
   }
 #endif /* CONFIG_MCUBOOT_UUID_VID || CONFIG_MCUBOOT_UUID_CID */
 
+  if (NRF_POWER->GPREGRET == 0x57) {
+    NRF_POWER->GPREGRET = 0x48;
+    boot_serial_enter();
+  }
 #ifdef CONFIG_BOOT_SERIAL_ENTRANCE_GPIO
   BOOT_LOG_DBG("Checking GPIO for serial recovery");
   if (io_detect_pin() && !io_boot_skip_serial_recovery()) {
