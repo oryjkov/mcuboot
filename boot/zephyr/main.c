@@ -464,6 +464,10 @@ int main(void)
 
     mcuboot_status_change(MCUBOOT_STATUS_STARTUP);
 
+    if (NRF_POWER->GPREGRET == 0x57) {
+      NRF_POWER->GPREGRET = 0x48;
+      boot_serial_enter();
+    }
 #ifdef CONFIG_BOOT_SERIAL_ENTRANCE_GPIO
     if (io_detect_pin() &&
             !io_boot_skip_serial_recovery()) {
